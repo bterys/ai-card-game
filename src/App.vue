@@ -1,30 +1,94 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { h, ref, Component } from 'vue'
+import { darkTheme } from 'naive-ui'
+import { RouterLink, RouterView, useRoute } from 'vue-router'
+import {
+  HomeOutline as HomeIcon,
+  InformationCircleOutline as AboutIcon
+} from '@vicons/ionicons5'
+
+function renderIcon (icon: Component) {
+  return () => h(NIcon, null, { default: () => h(icon) })
+}
+
+const menuOptions = [
+  {
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: {
+            path: '/'
+          }
+        },
+        { default: () => '首页' }
+      ),
+    key: 'home',
+    icon: renderIcon(HomeIcon)
+  },
+  {
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: {
+            path: '/about'
+          }
+        },
+        { default: () => '关于' }
+      ),
+    key: 'about',
+    icon: renderIcon(AboutIcon)
+  }
+]
+
+const collapsed = ref(false)
+const activeKey = ref<string | null>(null) // Track active menu item
+
+// Determine active key based on current route initially
+const route = useRoute()
+if (route.path === '/') {
+  activeKey.value = 'home'
+} else if (route.path === '/about') {
+  activeKey.value = 'about'
+}
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <n-config-provider :theme="darkTheme">
+    <n-layout style="height: 100vh">
+      <n-layout-sider
+        bordered
+        collapse-mode="width"
+        :collapsed-width="64"
+        :width="240"
+        :collapsed="collapsed"
+        show-trigger
+        @collapse="collapsed = true"
+        @expand="collapsed = false"
+      >
+        <n-menu
+          v-model:value="activeKey"
+          :collapsed="collapsed"
+          :collapsed-width="64"
+          :collapsed-icon-size="22"
+          :options="menuOptions"
+        />
+      </n-layout-sider>
+      <n-layout-content content-style="padding: 24px;">
+        <router-view />
+      </n-layout-content>
+    </n-layout>
+  </n-config-provider>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+/* Add any additional styles if needed */
+.n-layout-sider {
+  height: 100vh;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.n-layout-content {
+  height: 100vh;
+  background-color: #f0f2f5; /* Example background color */
 }
 </style>
