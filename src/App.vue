@@ -5,7 +5,11 @@ import { darkTheme, NIcon } from 'naive-ui'
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 import {
   HomeOutline as HomeIcon,
-  InformationCircleOutline as AboutIcon
+  InformationCircleOutline as AboutIcon,
+  CardOutline as CardsIcon,
+  BagHandleOutline as ShopIcon,
+  PeopleOutline as LineupIcon,
+  FlameOutline as BattleIcon
 } from '@vicons/ionicons5'
 
 function renderIcon (icon: Component) {
@@ -33,6 +37,62 @@ const menuOptions = [
         RouterLink,
         {
           to: {
+            path: '/cards'
+          }
+        },
+        { default: () => '卡牌' }
+      ),
+    key: 'cards',
+    icon: renderIcon(CardsIcon)
+  },
+  {
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: {
+            path: '/shop'
+          }
+        },
+        { default: () => '商店' }
+      ),
+    key: 'shop',
+    icon: renderIcon(ShopIcon)
+  },
+  {
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: {
+            path: '/lineup'
+          }
+        },
+        { default: () => '阵容' }
+      ),
+    key: 'lineup',
+    icon: renderIcon(LineupIcon)
+  },
+  {
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: {
+            path: '/battle'
+          }
+        },
+        { default: () => '战斗' }
+      ),
+    key: 'battle',
+    icon: renderIcon(BattleIcon)
+  },
+  {
+    label: () =>
+      h(
+        RouterLink,
+        {
+          to: {
             path: '/about'
           }
         },
@@ -48,9 +108,18 @@ const activeKey = ref<string | null>(null) // Track active menu item
 
 // Determine active key based on current route initially
 const route = useRoute()
-if (route.path === '/') {
+const path = route.path
+if (path === '/') {
   activeKey.value = 'home'
-} else if (route.path === '/about') {
+} else if (path === '/cards') {
+  activeKey.value = 'cards'
+} else if (path === '/shop') {
+  activeKey.value = 'shop'
+} else if (path === '/lineup') {
+  activeKey.value = 'lineup'
+} else if (path === '/battle') {
+  activeKey.value = 'battle'
+} else if (path === '/about') {
   activeKey.value = 'about'
 }
 </script>
