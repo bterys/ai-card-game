@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { h, ref, Component } from 'vue'
-import { darkTheme } from 'naive-ui'
+import { h, ref } from 'vue'
+import type { Component } from 'vue'
+import { darkTheme, NIcon } from 'naive-ui'
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 import {
   HomeOutline as HomeIcon,
