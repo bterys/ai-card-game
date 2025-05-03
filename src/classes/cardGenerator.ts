@@ -1,95 +1,99 @@
-import { Card, CardProps } from './card';
-import { CardRarity, RARITY_CONFIG, CardElement } from './config';
+import { Card, type CardProps } from './card';
+import { CardRarity, RARITY_CONFIG, CardElement, WeaponType, Archetype } from './config';
 
 export class CardGenerator {
   // 随机生成卡牌
   static generateRandomCard(): Card {
-    // 先随机决定卡牌稀有度
+    // 随机稀有度、元素、武器、职业
     const rarity = this.getRandomRarity();
-    
-    // 随机选择元素
     const element = this.getRandomElement();
-    
+    const weaponType = this.getRandomWeaponType();
+    const archetype = this.getRandomArchetype();
+
     // 生成基础属性
     const id = `card_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
     const name = this.generateRandomName(element);
     const description = this.generateRandomDescription(element);
     const imgUrl = `https://picsum.photos/200/300?random=${Math.floor(Math.random() * 1000)}`;
-    
+    const backgroundUrl = '';
+
     // 根据稀有度调整基础属性值范围
     const basePower = this.getBasePowerByRarity(rarity);
-    
-    // 随机生成属性
-    const atk = Math.floor(Math.random() * basePower) + 1;
-    const hp = Math.floor(Math.random() * basePower) + 1;
-    const cost = Math.floor((atk + hp) / 3) + 1;
-    
-    return new Card({
+    // 属性分布
+    const atk = this.randomInt(basePower * 0.8, basePower * 1.2);
+    const hp = this.randomInt(basePower * 0.8, basePower * 1.2);
+    const def = this.randomInt(basePower * 0.2, basePower * 0.6);
+    const agi = this.randomInt(basePower * 0.1, basePower * 0.5);
+    const criRate = +(0.03 + Math.random() * 0.07).toFixed(2); // 3%~10%
+    const criDmg = +(1.3 + Math.random() * 0.5).toFixed(2); // 130%~180%
+    const cost = Math.max(1, Math.floor((atk + hp + def) / 7));
+
+    const cardProps: CardProps = {
       id,
       name,
       description,
       imgUrl,
+      backgroundUrl,
+      rarity,
+      element,
+      weaponType,
+      archetype,
       atk,
       hp,
-      cost,
-      rarity,
-      element
-    });
+      def,
+      agi,
+      criRate,
+      criDmg,
+      cost
+    };
+    return new Card(cardProps);
   }
-  
-  // 根据掉落率随机获取稀有度
+
   private static getRandomRarity(): CardRarity {
     const rand = Math.random() * 100;
     let cumulativeRate = 0;
-    
+    // 假设每个稀有度有dropRate字段
     for (const rarity of Object.values(CardRarity)) {
-      cumulativeRate += RARITY_CONFIG[rarity].dropRate;
-      if (rand < cumulativeRate) {
-        return rarity;
+      if (RARITY_CONFIG[rarity] && (RARITY_CONFIG[rarity] as any).dropRate) {
+        cumulativeRate += (RARITY_CONFIG[rarity] as any).dropRate;
+        if (rand < cumulativeRate) return rarity;
       }
     }
-    
-    // 默认返回普通稀有度
     return CardRarity.F;
   }
-  
-  // 随机获取元素类型
+
   private static getRandomElement(): CardElement {
     const elements = Object.values(CardElement);
     return elements[Math.floor(Math.random() * elements.length)];
   }
-  
-  // 根据稀有度获取基础能力值范围
+
+  private static getRandomWeaponType(): WeaponType {
+    const types = Object.values(WeaponType);
+    return types[Math.floor(Math.random() * types.length)];
+  }
+
+  private static getRandomArchetype(): Archetype {
+    const types = Object.values(Archetype);
+    return types[Math.floor(Math.random() * types.length)];
+  }
+
   private static getBasePowerByRarity(rarity: CardRarity): number {
     switch(rarity) {
-      case CardRarity.F:
-        return 5;
-      case CardRarity.E:
-        return 7;
-      case CardRarity.D:
-        return 10;
-      case CardRarity.C:
-        return 15;
-      case CardRarity.B:
-        return 20;
-      case CardRarity.A:
-        return 25;
-      case CardRarity.S:
-        return 30;
-      case CardRarity.SS:
-        return 35;
-      case CardRarity.SSS:
-        return 40;
-      case CardRarity.SSSS:
-        return 45; 
-      case CardRarity.SSSSS:
-        return 50;
-      default:
-        return 5;
+      case CardRarity.F: return 5;
+      case CardRarity.E: return 7;
+      case CardRarity.D: return 10;
+      case CardRarity.C: return 15;
+      case CardRarity.B: return 20;
+      case CardRarity.A: return 25;
+      case CardRarity.S: return 30;
+      case CardRarity.SS: return 35;
+      case CardRarity.SSS: return 40;
+      case CardRarity.SSSS: return 45;
+      case CardRarity.SSSSS: return 50;
+      default: return 5;
     }
   }
 
-  // 随机生成卡牌名称
   private static generateRandomName(element: CardElement): string {
     const elementPrefixes = {
       [CardElement.Fire]: ['烈焰', '火焰', '灼热', '熔岩', '炎龙'],
@@ -99,16 +103,12 @@ export class CardGenerator {
       [CardElement.Light]: ['神圣', '光明', '曙光', '辉煌', '圣洁'],
       [CardElement.Dark]: ['黑暗', '暗影', '虚空', '深渊', '死亡']
     };
-    
     const subjects = ['战士', '法师', '猎手', '龙', '巨兽', '守护者', '精灵', '亡灵', '使者', '行者'];
-    
     const elementPrefix = elementPrefixes[element][Math.floor(Math.random() * elementPrefixes[element].length)];
     const randomSubject = subjects[Math.floor(Math.random() * subjects.length)];
-    
     return `${elementPrefix}${randomSubject}`;
   }
-  
-  // 随机生成卡牌描述
+
   private static generateRandomDescription(element: CardElement): string {
     const elementEffects = {
       [CardElement.Fire]: ['燃烧', '灼烧', '爆炸', '烈焰冲击', '熔岩喷射'],
@@ -118,14 +118,15 @@ export class CardGenerator {
       [CardElement.Light]: ['神圣惩击', '净化', '治愈', '光明护盾', '圣光闪耀'],
       [CardElement.Dark]: ['暗影打击', '噬魂', '诅咒', '暗黑之云', '虚空吞噬']
     };
-    
     const targets = ['敌人', '友方单位', '全场单位', '自身', '随机目标', '所有敌人', '所有友军'];
     const effects = ['造成伤害', '提供护甲', '恢复生命值', '增加攻击力', '减少防御力', '施加持续效果'];
-    
     const elementEffect = elementEffects[element][Math.floor(Math.random() * elementEffects[element].length)];
     const randomTarget = targets[Math.floor(Math.random() * targets.length)];
     const randomEffect = effects[Math.floor(Math.random() * effects.length)];
-    
     return `释放${elementEffect}，对${randomTarget}${randomEffect}。`;
+  }
+
+  private static randomInt(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + Math.floor(min);
   }
 }
