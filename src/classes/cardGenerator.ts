@@ -20,17 +20,17 @@ export class CardGenerator {
     const basePower = this.getBasePowerByRarity(rarity);
     
     // 随机生成属性
-    const attack = Math.floor(Math.random() * basePower) + 1;
-    const health = Math.floor(Math.random() * basePower) + 1;
-    const cost = Math.floor((attack + health) / 3) + 1;
+    const atk = Math.floor(Math.random() * basePower) + 1;
+    const hp = Math.floor(Math.random() * basePower) + 1;
+    const cost = Math.floor((atk + hp) / 3) + 1;
     
     return new Card({
       id,
       name,
       description,
       imgUrl,
-      attack,
-      health,
+      atk,
+      hp,
       cost,
       rarity,
       element

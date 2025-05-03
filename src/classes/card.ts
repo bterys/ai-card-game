@@ -1,15 +1,25 @@
-import { CardRarity, RARITY_CONFIG, CardElement, ELEMENT_CONFIG } from './config';
+import { CardRarity, RARITY_CONFIG, CardElement, ELEMENT_CONFIG, WeaponType, Archetype } from './config';
 
 export interface CardProps {
   id: string;
   name: string;
   description: string;
   imgUrl: string;
-  attack: number;
-  health: number;
-  cost: number;
-  rarity: CardRarity;  // 卡牌稀有度
+  backgroundUrl?: string; // 背景颜色
+
+  rarity: CardRarity; // 卡牌稀有度
   element?: CardElement; // 卡牌元素类型
+  weaponType?: WeaponType; // 武器种类
+  archetype: Archetype; // 职业
+
+  atk: number;
+  hp: number;
+  def: number;
+  agi: number;
+  criRate: number;
+  criDmg: number;
+
+  cost: number;
 }
 
 export class Card {
@@ -17,11 +27,11 @@ export class Card {
   name: string;
   description: string;
   imgUrl: string;
-  backgroundColor: string; // 背景颜色
+  backgroundUrl: string; // 背景颜色
   element: CardElement; // 元素
   race: string; // 种族
-  weaponProficiency: string; // 武器熟练度
-  archetype: string; // 职业
+  weaponType: WeaponType; // 武器种类
+  archetype: Archetype; // 职业
 
   hp: number;
   atk: number;
@@ -38,21 +48,26 @@ export class Card {
     this.name = props.name;
     this.description = props.description;
     this.imgUrl = props.imgUrl;
-    this.atk = props.attack;
-    this.hp = props.health;
+    this.hp = props.hp;
+    this.atk = props.atk;
+    this.def = props.def || 0; // 默认防御力为0
+    this.agi = props.agi || 0; // 默认敏捷为0
+    this.criRate = props.criRate || 0.05; // 默认暴击率为5%
+    this.criDmg = props.criDmg || 1.5; // 默认暴击伤害为150%
+
     this.cost = props.cost;
     this.rarity = props.rarity || CardRarity.F; // 默认为普通稀有度
     this.element = props.element || CardElement.Fire; // 默认为火属性
-    
+
     // 初始化其他属性
     this.def = 0;
     this.agi = 0;
     this.criRate = 0.05; // 基础暴击率5%
-    this.criDmg = 1.5;   // 基础暴击伤害150%
-    this.backgroundColor = '';
-    this.race = '';
-    this.weaponProficiency = '';
-    this.archetype = '';
+    this.criDmg = 1.5; // 基础暴击伤害150%
+    this.backgroundUrl = "";
+    this.race = "";
+    this.weaponType = props.weaponType || WeaponType.Sword; // 默认为剑类武器
+    this.archetype = props.archetype || Archetype.Attacker; // 默认为战士职业
   }
 
   // 获取卡牌稀有度配置

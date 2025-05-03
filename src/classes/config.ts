@@ -5,7 +5,6 @@ export enum CardRarity {
   D = 'rare',
   C = 'epic',
   B = 'legendary',
-  // 新增稀有度
   A = 'mythic',
   S = 'divine',
   SS = 'artifact',
@@ -88,8 +87,8 @@ export const ELEMENT_CONFIG: Record<CardElement, ElementConfig> = {
 export interface RarityConfig {
   name: string;       // 稀有度名称
   color: string;      // 稀有度颜色
-  dropRate: number;   // 掉落几率 (百分比)
   powerMultiplier: number;  // 能力倍率
+  growthMultiplier: number; // 成长属性倍率
 }
 
 // 游戏卡牌稀有度配置
@@ -97,68 +96,68 @@ export const RARITY_CONFIG: Record<CardRarity, RarityConfig> = {
   [CardRarity.F]: {
     name: 'F',
     color: '#AAAAAA',
-    dropRate: 50,
-    powerMultiplier: 1.0
+    powerMultiplier: 1.0,
+    growthMultiplier: 1.0
   },
   [CardRarity.E]: {
     name: 'E',
     color: '#2AAA2A',
-    dropRate: 30,
-    powerMultiplier: 1.2
+    powerMultiplier: 1.2,
+    growthMultiplier: 1.1
   },
   [CardRarity.D]: {
     name: 'D',
     color: '#2A7FE5',
-    dropRate: 15,
-    powerMultiplier: 1.5
+    powerMultiplier: 1.5,
+    growthMultiplier: 1.2
   },
   [CardRarity.C]: {
     name: 'C',
     color: '#9933CC',
-    dropRate: 4,
-    powerMultiplier: 2.0
+    powerMultiplier: 2.0,
+    growthMultiplier: 1.3
   },
   [CardRarity.B]: {
     name: 'B',
     color: '#DD9900',
-    dropRate: 1,
-    powerMultiplier: 3.0
+    powerMultiplier: 3.0,
+    growthMultiplier: 1.5
   },
   // 新增稀有度配置
   [CardRarity.A]: {
     name: 'A',
     color: '#FF4500',
-    dropRate: 0.5,
-    powerMultiplier: 4.0
+    powerMultiplier: 4.0,
+    growthMultiplier: 1.7
   },
   [CardRarity.S]: {
     name: 'S',
     color: '#FFFFFF',
-    dropRate: 0.3,
-    powerMultiplier: 5.0
+    powerMultiplier: 5.0,
+    growthMultiplier: 2.0
   },
   [CardRarity.SS]: {
     name: 'SS',
     color: '#00FFFF',
-    dropRate: 0.2,
-    powerMultiplier: 6.0
+    powerMultiplier: 6.0,
+    growthMultiplier: 2.3
   },
   [CardRarity.SSS]: {
     name: 'SSS',
     color: '#7DF9FF',
-    dropRate: 0.1,
-    powerMultiplier: 7.0
+    powerMultiplier: 7.0,
+    growthMultiplier: 2.6
   },
   [CardRarity.SSSS]: {
     name: 'SSSS',
     color: '#E6E6FA',
-    dropRate: 0.05,
-    powerMultiplier: 8.0
+    powerMultiplier: 8.0,
+    growthMultiplier: 3.0
   },
   [CardRarity.SSSSS]: {
     name: 'SSSSS',
     color: '#FFD700',
-    dropRate: 0.02,
-    powerMultiplier: 10.0
+    powerMultiplier: 10.0,
+    growthMultiplier: 3.5
   }
 };
