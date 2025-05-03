@@ -1,0 +1,69 @@
+{
+  "cards": [
+    {
+      "id": 1,
+      "name": "智能助手",
+      "type": "攻击",
+      "rarity": "普通",
+      "cost": 2,
+      "attack": 3,
+      "health": 2,
+      "effect": "部署时：对敌方随机单位造成1点伤害",
+      "description": "你的得力助手，总是能在关键时刻给予支持",
+      "image": "assistant.png"
+    },
+    {
+      "id": 2,
+      "name": "数据挖掘机",
+      "type": "防御",
+      "rarity": "稀有",
+      "cost": 3,
+      "attack": 2,
+      "health": 4,
+      "effect": "护盾：能够抵挡第一次受到的伤害",
+      "description": "深入数据的核心，挖掘最有价值的信息",
+      "image": "dataminer.png"
+    },
+    {
+      "id": 3,
+      "name": "神经网络",
+      "type": "法术",
+      "rarity": "史诗",
+      "cost": 5,
+      "attack": 5,
+      "health": 5,
+      "effect": "每回合结束时：增强场上所有友方单位1点攻击力",
+      "description": "复杂的连接网络，每一次迭代都带来惊人的力量",
+      "image": "neural.png"
+    },
+    {
+      "id": 4,
+      "name": "量子计算",
+      "type": "特殊",
+      "rarity": "传说",
+      "cost": 8,
+      "attack": 8,
+      "health": 8,
+      "effect": "部署时：你可以使用一张手牌，并且不消耗能量",
+      "description": "打破常规的计算方式，实现看似不可能的任务",
+      "image": "quantum.png"
+    },
+    {
+      "id": 5,
+      "name": "防火墙",
+      "type": "防御",
+      "rarity": "普通",
+      "cost": 1,
+      "attack": 0,
+      "health": 6,
+      "effect": "嘲讽：敌方必须优先攻击此单位",
+      "description": "坚固的防线，阻挡一切恶意入侵",
+      "image": "firewall.png"
+    }
+  ],
+  "cardTypes": ["攻击", "防御", "法术", "特殊"],
+  "rarities": ["普通", "稀有", "史诗", "传说"],
+  "maxDeckSize": 30,
+  "startingHandSize": 4,
+  "maxEnergy": 10
+}
