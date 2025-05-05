@@ -1,5 +1,12 @@
 import { Card, type CardProps } from './card';
-import { CardRarity, RARITY_CONFIG, CardElement, WeaponType, Archetype } from './config';
+import {
+  CardRarity,
+  RARITY_CONFIG,
+  CardElement,
+  WeaponType,
+  Archetype,
+  cardData,
+} from "./config";
 
 export class CardGenerator {
   // 随机生成卡牌
@@ -24,9 +31,14 @@ export class CardGenerator {
     const hp = this.randomInt(basePower * 0.8, basePower * 1.2);
     const def = this.randomInt(basePower * 0.2, basePower * 0.6);
     const agi = this.randomInt(basePower * 0.1, basePower * 0.5);
-    const criRate = +(0.03 + Math.random() * 0.07).toFixed(2); // 3%~10%
-    const criDmg = +(1.3 + Math.random() * 0.5).toFixed(2); // 130%~180%
+    const criRate = cardData.criRate[this.randomInt(0, cardData.criRate.length - 1)];
+    const criDmg = cardData.criDmg[this.randomInt(0, cardData.criDmg.length - 1)];
     const cost = Math.max(1, Math.floor((atk + hp + def) / 7));
+    const lv = 1; // 初始等级
+    const exp = 0; // 初始经验值
+    const expNext = 100; // 下一级经验值
+    const star = 0; // 初始星级
+    const starMax = 5; // 最大星级
 
     const cardProps: CardProps = {
       id,
@@ -44,6 +56,11 @@ export class CardGenerator {
       agi,
       criRate,
       criDmg,
+      lv,
+      exp,
+      expNext,
+      star,
+      starMax,
       cost
     };
     return new Card(cardProps);

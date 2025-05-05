@@ -19,6 +19,12 @@ export interface CardProps {
   criRate: number;
   criDmg: number;
 
+  lv: number; // 等级
+  exp: number; // 经验值
+  expNext: number; // 下一级经验值
+  star: number; // 星级
+  starMax: number; // 最大星级
+
   cost: number;
 }
 
@@ -32,6 +38,7 @@ export class Card {
   race: string; // 种族
   weaponType: WeaponType; // 武器种类
   archetype: Archetype; // 职业
+  rarity: CardRarity; // 稀有度属性
 
   hp: number;
   atk: number;
@@ -39,9 +46,12 @@ export class Card {
   agi: number;
   criRate: number;
   criDmg: number;
-
+  lv?: number; // 等级
+  exp?: number; // 经验值
+  expNext?: number; // 下一级经验值
+  star?: number; // 星级
+  starMax?: number; // 最大星级
   cost: number;
-  rarity: CardRarity; // 稀有度属性
 
   constructor(props: CardProps) {
     this.id = props.id;

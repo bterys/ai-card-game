@@ -1,3 +1,4 @@
+
 // 卡牌稀有度配置
 export enum CardRarity {
   F = 'common',
@@ -160,4 +161,17 @@ export const RARITY_CONFIG: Record<CardRarity, RarityConfig> = {
     powerMultiplier: 10.0,
     growthMultiplier: 3.5
   }
+};
+
+export const cardData = {
+  hp: [1000, 1200, 1500, 1900, 2400],
+  atk: [150, 200, 250, 300, 350],
+  def: [50, 60, 70, 80, 90],
+  agi: [10, 15, 20, 25, 30],
+  criRate: [0.05, 0.1, 0.15, 0.2, 0.25],
+  criDmg: [1.5, 1.6, 1.7, 1.8, 1.9],
+  cost: [1, 2, 3, 4, 5],
+  // 其他属性
+  // 例如：
+
 };

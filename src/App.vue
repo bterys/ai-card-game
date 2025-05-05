@@ -157,6 +157,5 @@ watch(() => route.path, (newPath) => {
 }
 .n-layout-content {
   height: 100vh;
-  background-color: #f0f2f5; /* Example background color */
 }
 </style>
